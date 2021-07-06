@@ -1,22 +1,24 @@
 package net.rakugakibox.spring.boot.logback.access.undertow;
 
+import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller;
+import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
+
+import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
+
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
 import io.undertow.server.HttpHandler;
 import io.undertow.servlet.api.DeploymentInfo;
 import lombok.extern.slf4j.Slf4j;
-import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller;
-import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
-import org.springframework.boot.web.embedded.undertow.ConfigurableUndertowWebServerFactory;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.core.env.Environment;
 
 /**
  * The Logback-access installer for Undertow.
  */
 @Slf4j
 public class UndertowLogbackAccessInstaller
-        extends AbstractLogbackAccessInstaller<ConfigurableUndertowWebServerFactory> {
+        extends AbstractLogbackAccessInstaller<UndertowServletWebServerFactory> {
 
     /**
      * Constructs an instance.
@@ -35,7 +37,7 @@ public class UndertowLogbackAccessInstaller
 
     /** {@inheritDoc} */
     @Override
-    protected void installLogbackAccess(ConfigurableUndertowWebServerFactory container) {
+    protected void installLogbackAccess(UndertowServletWebServerFactory container) {
         container.addBuilderCustomizers(this::enableRecordingRequestStartTime);
         container.addDeploymentInfoCustomizers(this::addUndertowHttpHandlerWrapper);
         log.debug("Installed Logback-access: container=[{}]", container);

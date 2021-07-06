@@ -5,6 +5,7 @@ import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuing
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerConfiguration;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -14,12 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.rule.OutputCapture;
+import org.springframework.boot.test.system.OutputCaptureRule;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,7 +35,8 @@ public abstract class AbstractFallbackConfigurationFileAutoDetectingTest {
     /**
      * The output capture rule.
      */
-    private final OutputCapture outputCapture = new OutputCapture();
+    @Rule
+    public final OutputCaptureRule outputCapture = new OutputCaptureRule();
 
     /**
      * The REST template.
